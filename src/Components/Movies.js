@@ -1,314 +1,150 @@
-// // import React, { Component } from 'react'
-// // import axios from 'axios';
-
-// // export default class Movies extends Component {
-// //     constructor(){
-// //         super();
-// //         this.state={
-// //             hover:'',
-// //             parr:[1],
-// //             currPage:1,
-// //             movies:[],
-// //             favourites:[]
-// //         }
-// //     }
-// //     loadMoreMovies = async() => {
-// //         let newPage = this.state.currPage+1;
-// //         const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=5540e483a20e0b20354dabc2d66a31c9&language=en-US&page=${newPage}`);
-// //         let data = res.data
-// //         // console.log(data);
-// //         this.setState({
-// //             movies:[...this.state.movies,...data.results],
-// //             currPage:newPage
-// //         })
-// //     }
-// //     async componentDidMount(){
-// //         //Side effects 
-// //         const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=5540e483a20e0b20354dabc2d66a31c9&language=en-US&page=${this.state.currPage}`);
-// //         let data = res.data
-// //         // console.log(data);
-// //         this.setState({
-// //             movies:[...data.results]
-// //         })
-// //         let callbackfn = (entries) => {
-// //             if(entries[0].isIntersecting){
-// //                 this.loadMoreMovies();
-// //             }
-// //         }
-// //         let loader = document.querySelector(".infinite-loader");
-// //         let observer = new IntersectionObserver(callbackfn,{threshold:1.0})
-// //         observer.observe(loader)
-// //     }
-// //     changeMovies=async()=>{
-// //         console.log("changemovies called");
-// //         console.log(this.state.currPage);
-// //         const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=5540e483a20e0b20354dabc2d66a31c9&language=en-US&page=${this.state.currPage}`);
-// //         let data = res.data
-// //         // console.log(data);
-// //         this.setState({
-// //             movies:[...data.results]
-// //         })
-// //     }
-// //     handleRight=()=>{
-// //         let temparr =[]
-// //         for(let i=1;i<=this.state.parr.length+1;i++){
-// //             temparr.push(i);
-// //         }
-// //         this.setState({
-// //             parr:[...temparr],
-// //             currPage:this.state.currPage+1
-// //         },this.changeMovies)
-// //     }
-// //     handleLeft=()=>{
-// //         if(this.state.currPage!=1){
-// //             this.setState({
-// //                 currPage:this.state.currPage-1
-// //             },this.changeMovies)
-// //         }
-// //     }
-// //     handleClick=(value)=>{
-// //         if(value!=this.state.currPage){
-// //             console.log("i am called")
-// //             this.setState({
-// //                 currPage:value
-// //             },this.changeMovies)
-// //         }
-// //     }
-// //     handleFavourites=(movie)=>{
-// //         let oldData = JSON.parse(localStorage.getItem("movies-app") || "[]")
-// //         if(this.state.favourites.includes(movie.id)){
-// //             oldData = oldData.filter((m)=>m.id!=movie.id)
-// //         }else{
-// //             oldData.push(movie)
-// //         }
-// //         localStorage.setItem("movies-app",JSON.stringify(oldData));
-// //         console.log(oldData);
-// //         this.handleFavouritesState();
-// //     }
-// //     handleFavouritesState=()=>{
-// //         let oldData = JSON.parse(localStorage.getItem("movies-app") || "[]")
-// //         let temp = oldData.map((movie)=>movie.id);
-// //         this.setState({
-// //             favourites:[...temp]
-// //         })
-// //     }
-// //     render() {
-// //         // let movie = movies.results
-// //         return (
-// //             <>
-// //                 {
-// //                     this.state.movies.length==0?
-// //                     <div class="spinner-border text-primary" role="status">
-// //                         <span class="visually-hidden">Loading...</span>
-// //                     </div> : 
-// //                     <div>
-// //                         <h3 className="text-center"><strong>Trending</strong></h3>
-// //                         <div className="movies-list">
-// //                             {
-// //                                 this.state.movies.map((movieObj)=>(
-// //                                     <div className="card movies-card" onMouseEnter={()=>this.setState({hover:movieObj.id})} onMouseLeave={()=>this.setState({hover:''})}>
-// //                                         <img src={`https://image.tmdb.org/t/p/original${movieObj.backdrop_path}`}  alt={movieObj.title} className="card-img-top movies-img"/>
-// //                                         {/* <div className="card-body"> */}
-// //                                             <h5 className="card-title movies-title">{movieObj.original_title}</h5>
-// //                                             {/* <p class="card-text movies-text">{movieObj.overview}</p> */}
-// //                                             <div className="button-wrapper" style={{display:'flex',width:'100%',justifyContent:'center'}}>
-// //                                             {
-// //                                                 this.state.hover == movieObj.id &&
-// //                                                 <a className="btn btn-primary movies-button" onClick={()=>this.handleFavourites(movieObj)}>{this.state.favourites.includes(movieObj.id)?"Remove from favourites":"Add to favourites"}</a>
-// //                                             }
-// //                                             </div>
-// //                                         {/* </div> */}
-// //                                     </div>
-// //                                 ))
-// //                             }
-// //                         </div>
-// //                         <div className="infinite-loader"style={{display:'flex',justifyContent:'center'}}>
-// //                             <h2>Load More Movies .........................</h2>
-// //                         </div>
-// //                         {/* <div style={{display:'flex',justifyContent:'center'}}> */}
-// //                         {/* <nav aria-label="Page navigation example">
-// //                             <ul class="pagination">
-// //                                 <li class="page-item"><a class="page-link" onClick={this.handleLeft}>Previous</a></li>
-// //                                 {
-// //                                     this.state.parr.map((value)=>(
-// //                                         <li class="page-item"><a class="page-link" onClick={()=>this.handleClick(value)}>{value}</a></li>
-// //                                     ))
-// //                                 }
-// //                                 <li class="page-item"><a class="page-link" onClick={this.handleRight}>Next</a></li>
-// //                             </ul>
-// //                         </nav> */}
-// //                         {/* </div> */}
-// //                     </div>
-// //                 }
-// //             </>
-// //         )
-// //     }
-// // }
-
-
-// import React, { Component } from 'react';
+// import React, { Component } from 'react'
 // import axios from 'axios';
 
-// class Movies extends Component {
-//     constructor() {
+// export default class Movies extends Component {
+//     constructor(){
 //         super();
-//         this.state = {
-//             hover: '',
-//             parr: [1],
-//             currPage: 1,
-//             movies: [],
-//             favourites: []
-//         };
-//     }
-
-//     loadMoreMovies = async () => {
-//         try {
-//             const { currPage } = this.state;
-//             const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=5540e483a20e0b20354dabc2d66a31c9&language=en-US&page=${currPage}`);
-//             const data = res.data;
-
-//             this.setState({
-//                 movies: [...this.state.movies, ...data.results],
-//                 currPage: currPage + 1
-//             });
-//         } catch (error) {
-//             console.error('Error loading more movies:', error);
+//         this.state={
+//             hover:'',
+//             parr:[1],
+//             currPage:1,
+//             movies:[],
+//             favourites:[]
 //         }
-//     };
-
-//     componentDidMount() {
-//         this.fetchMovies();
-
-//         const callbackfn = (entries) => {
-//             if (entries[0].isIntersecting) {
+//     }
+//     loadMoreMovies = async() => {
+//         let newPage = this.state.currPage+1;
+//         const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=5540e483a20e0b20354dabc2d66a31c9&language=en-US&page=${newPage}`);
+//         let data = res.data
+//         // console.log(data);
+//         this.setState({
+//             movies:[...this.state.movies,...data.results],
+//             currPage:newPage
+//         })
+//     }
+//     async componentDidMount(){
+//         //Side effects 
+//         const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=5540e483a20e0b20354dabc2d66a31c9&language=en-US&page=${this.state.currPage}`);
+//         let data = res.data
+//         // console.log(data);
+//         this.setState({
+//             movies:[...data.results]
+//         })
+//         let callbackfn = (entries) => {
+//             if(entries[0].isIntersecting){
 //                 this.loadMoreMovies();
 //             }
-//         };
-
-//         // Wait for the component to be mounted before accessing the loader
-//         setTimeout(() => {
-//             const loader = document.querySelector(".infinite-loader");
-
-//             if (loader) {
-//                 const observer = new IntersectionObserver(callbackfn, { threshold: 1.0 });
-//                 observer.observe(loader);
-//             }
-//         }, 0);
+//         }
+//         let loader = document.querySelector(".infinite-loader");
+//         let observer = new IntersectionObserver(callbackfn,{threshold:1.0})
+//         observer.observe(loader)
 //     }
-
-//     fetchMovies = async () => {
-//         try {
-//             const { currPage } = this.state;
-//             const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=5540e483a20e0b20354dabc2d66a31c9&language=en-US&page=${currPage}`);
-//             const data = res.data;
-
-//             this.setState({
-//                 movies: [...data.results]
-//             });
-//         } catch (error) {
-//             console.error('Error fetching movies:', error);
-//         }
-//     };
-
-//     changeMovies = async () => {
-//         try {
-//             const { currPage } = this.state;
-//             const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=5540e483a20e0b20354dabc2d66a31c9&language=en-US&page=${currPage}`);
-//             const data = res.data;
-
-//             this.setState({
-//                 movies: [...data.results]
-//             });
-//         } catch (error) {
-//             console.error('Error changing movies:', error);
-//         }
-//     };
-
-//     handleRight = () => {
-//         const temparr = Array.from({ length: this.state.parr.length + 1 }, (_, i) => i + 1);
-
+//     changeMovies=async()=>{
+//         console.log("changemovies called");
+//         console.log(this.state.currPage);
+//         const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=5540e483a20e0b20354dabc2d66a31c9&language=en-US&page=${this.state.currPage}`);
+//         let data = res.data
+//         // console.log(data);
 //         this.setState({
-//             parr: temparr,
-//             currPage: this.state.currPage + 1
-//         }, this.changeMovies);
-//     };
-
-//     handleLeft = () => {
-//         if (this.state.currPage !== 1) {
+//             movies:[...data.results]
+//         })
+//     }
+//     handleRight=()=>{
+//         let temparr =[]
+//         for(let i=1;i<=this.state.parr.length+1;i++){
+//             temparr.push(i);
+//         }
+//         this.setState({
+//             parr:[...temparr],
+//             currPage:this.state.currPage+1
+//         },this.changeMovies)
+//     }
+//     handleLeft=()=>{
+//         if(this.state.currPage!=1){
 //             this.setState({
-//                 currPage: this.state.currPage - 1
-//             }, this.changeMovies);
+//                 currPage:this.state.currPage-1
+//             },this.changeMovies)
 //         }
-//     };
-
-//     handleClick = (value) => {
-//         if (value !== this.state.currPage) {
+//     }
+//     handleClick=(value)=>{
+//         if(value!=this.state.currPage){
+//             console.log("i am called")
 //             this.setState({
-//                 currPage: value
-//             }, this.changeMovies);
+//                 currPage:value
+//             },this.changeMovies)
 //         }
-//     };
-
-//     handleFavourites = (movie) => {
-//         let oldData = JSON.parse(localStorage.getItem("movies-app") || "[]");
-
-//         if (this.state.favourites.includes(movie.id)) {
-//             oldData = oldData.filter((m) => m.id !== movie.id);
-//         } else {
-//             oldData.push(movie);
+//     }
+//     handleFavourites=(movie)=>{
+//         let oldData = JSON.parse(localStorage.getItem("movies-app") || "[]")
+//         if(this.state.favourites.includes(movie.id)){
+//             oldData = oldData.filter((m)=>m.id!=movie.id)
+//         }else{
+//             oldData.push(movie)
 //         }
-
-//         localStorage.setItem("movies-app", JSON.stringify(oldData));
+//         localStorage.setItem("movies-app",JSON.stringify(oldData));
+//         console.log(oldData);
 //         this.handleFavouritesState();
-//     };
-
-//     handleFavouritesState = () => {
-//         let oldData = JSON.parse(localStorage.getItem("movies-app") || "[]");
-//         let temp = oldData.map((movie) => movie.id);
-
+//     }
+//     handleFavouritesState=()=>{
+//         let oldData = JSON.parse(localStorage.getItem("movies-app") || "[]")
+//         let temp = oldData.map((movie)=>movie.id);
 //         this.setState({
-//             favourites: [...temp]
-//         });
-//     };
-
+//             favourites:[...temp]
+//         })
+//     }
 //     render() {
+//         // let movie = movies.results
 //         return (
 //             <>
-//                 {this.state.movies.length === 0 ? (
-//                     <div className="spinner-border text-primary" role="status">
-//                         <span className="visually-hidden">Loading...</span>
-//                     </div>
-//                 ) : (
+//                 {
+//                     this.state.movies.length==0?
+//                     <div class="spinner-border text-primary" role="status">
+//                         <span class="visually-hidden">Loading...</span>
+//                     </div> : 
 //                     <div>
 //                         <h3 className="text-center"><strong>Trending</strong></h3>
 //                         <div className="movies-list">
-//                             {this.state.movies.map((movieObj) => (
-//                                 <div className="card movies-card" key={movieObj.id} onMouseEnter={() => this.setState({ hover: movieObj.id })} onMouseLeave={() => this.setState({ hover: '' })}>
-//                                     <img src={`https://image.tmdb.org/t/p/original${movieObj.backdrop_path}`} alt={movieObj.title} className="card-img-top movies-img" />
-//                                     <h5 className="card-title movies-title">{movieObj.original_title}</h5>
-//                                     <div className="button-wrapper" style={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
-//                                         {this.state.hover === movieObj.id && (
-//                                             <button className="btn btn-primary movies-button" onClick={() => this.handleFavourites(movieObj)}>
-//                                                 {this.state.favourites.includes(movieObj.id) ? "Remove from favourites" : "Add to favourites"}
-//                                             </button>
-//                                         )}
+//                             {
+//                                 this.state.movies.map((movieObj)=>(
+//                                     <div className="card movies-card" onMouseEnter={()=>this.setState({hover:movieObj.id})} onMouseLeave={()=>this.setState({hover:''})}>
+//                                         <img src={`https://image.tmdb.org/t/p/original${movieObj.backdrop_path}`}  alt={movieObj.title} className="card-img-top movies-img"/>
+//                                         {/* <div className="card-body"> */}
+//                                             <h5 className="card-title movies-title">{movieObj.original_title}</h5>
+//                                             {/* <p class="card-text movies-text">{movieObj.overview}</p> */}
+//                                             <div className="button-wrapper" style={{display:'flex',width:'100%',justifyContent:'center'}}>
+//                                             {
+//                                                 this.state.hover == movieObj.id &&
+//                                                 <a className="btn btn-primary movies-button" onClick={()=>this.handleFavourites(movieObj)}>{this.state.favourites.includes(movieObj.id)?"Remove from favourites":"Add to favourites"}</a>
+//                                             }
+//                                             </div>
+//                                         {/* </div> */}
 //                                     </div>
-//                                 </div>
-//                             ))}
+//                                 ))
+//                             }
 //                         </div>
-//                         <div className="infinite-loader" style={{ display: 'flex', justifyContent: 'center' }}>
+//                         <div className="infinite-loader"style={{display:'flex',justifyContent:'center'}}>
 //                             <h2>Load More Movies .........................</h2>
 //                         </div>
+//                         {/* <div style={{display:'flex',justifyContent:'center'}}> */}
+//                         {/* <nav aria-label="Page navigation example">
+//                             <ul class="pagination">
+//                                 <li class="page-item"><a class="page-link" onClick={this.handleLeft}>Previous</a></li>
+//                                 {
+//                                     this.state.parr.map((value)=>(
+//                                         <li class="page-item"><a class="page-link" onClick={()=>this.handleClick(value)}>{value}</a></li>
+//                                     ))
+//                                 }
+//                                 <li class="page-item"><a class="page-link" onClick={this.handleRight}>Next</a></li>
+//                             </ul>
+//                         </nav> */}
+//                         {/* </div> */}
 //                     </div>
-//                 )}
+//                 }
 //             </>
-//         );
+//         )
 //     }
 // }
 
-// export default Movies;
-
-// ....................... For responsive code >...................................
 
 import React, { Component } from 'react';
 import axios from 'axios';
@@ -445,21 +281,17 @@ class Movies extends Component {
                 ) : (
                     <div>
                         <h3 className="text-center"><strong>Trending</strong></h3>
-                        <div className="row row-cols-1 row-cols-md-3 g-4">
+                        <div className="movies-list">
                             {this.state.movies.map((movieObj) => (
-                                <div key={movieObj.id} className="col">
-                                    <div className="card movies-card" onMouseEnter={() => this.setState({ hover: movieObj.id })} onMouseLeave={() => this.setState({ hover: '' })}>
-                                        <img src={`https://image.tmdb.org/t/p/original${movieObj.backdrop_path}`} alt={movieObj.title} className="card-img-top movies-img img-fluid" />
-                                        <div className="card-body">
-                                            <h5 className="card-title movies-title">{movieObj.original_title}</h5>
-                                            <div className="button-wrapper" style={{ display: 'flex', justifyContent: 'center' }}>
-                                                {this.state.hover === movieObj.id && (
-                                                    <button className="btn btn-primary movies-button" onClick={() => this.handleFavourites(movieObj)}>
-                                                        {this.state.favourites.includes(movieObj.id) ? "Remove from favourites" : "Add to favourites"}
-                                                    </button>
-                                                )}
-                                            </div>
-                                        </div>
+                                <div className="card movies-card" key={movieObj.id} onMouseEnter={() => this.setState({ hover: movieObj.id })} onMouseLeave={() => this.setState({ hover: '' })}>
+                                    <img src={`https://image.tmdb.org/t/p/original${movieObj.backdrop_path}`} alt={movieObj.title} className="card-img-top movies-img" />
+                                    <h5 className="card-title movies-title">{movieObj.original_title}</h5>
+                                    <div className="button-wrapper" style={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+                                        {this.state.hover === movieObj.id && (
+                                            <button className="btn btn-primary movies-button" onClick={() => this.handleFavourites(movieObj)}>
+                                                {this.state.favourites.includes(movieObj.id) ? "Remove from favourites" : "Add to favourites"}
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                             ))}
@@ -475,3 +307,7 @@ class Movies extends Component {
 }
 
 export default Movies;
+
+
+
+
