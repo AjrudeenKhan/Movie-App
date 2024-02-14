@@ -150,7 +150,9 @@ export default class Favourite extends Component {
                                         {
                                             filterarr.map((movieObj)=>(
                                                 <tr>
-                                                    <td><img src={`https://image.tmdb.org/t/p/original ${movieObj.backdrop_path}`} alt={movieObj.title} style={{width:'5rem'}}/> {movieObj.original_title}</td>
+                                                 <td><img src={`https://image.tmdb.org/t/p/original${movieObj.backdrop_path}`} alt={movieObj.title} style={{width:'5rem'}}/> {movieObj.original_title}</td>
+
+                                                   {/* <td><img src={`https://image.tmdb.org/t/p/original ${movieObj.backdrop_path}`} alt={movieObj.title} style={{width:'5rem'}}/> {movieObj.original_title}</td> */}
                                                     <td>{genreids[movieObj.genre_ids[0]]}</td>
                                                     <td>{movieObj.popularity}</td>
                                                     <td>{movieObj.vote_average}</td>
