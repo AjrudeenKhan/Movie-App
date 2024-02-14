@@ -4,7 +4,6 @@
 
 ## About
 
-
 This is a web-based movie search application with the following features:
 - **Trending**: User can see Tranding Movies.
 - **All Genres**: User can see added  All Genres Movies.
@@ -19,18 +18,6 @@ This is a web-based movie search application with the following features:
 - CSS
 - Axios
 - Local Storage
-
-
-## Steps to Run Locally
-
-1. Clone this repository.
-2. Navigate to the `client` folder.
-3. Run `npm install` to install the required packages.
-4. Run `npm start` to start the client.
-5. Open a new console, navigate to the `server` folder.
-6. Run `npm install` to install the Node packages.
-7. Run `npm start` to start the server.
-8. Access the application at `http://localhost:3000/`.
 
 ## Functionality
 
@@ -50,6 +37,30 @@ This is a web-based movie search application with the following features:
 ### Category Movies Page
 
 ![Screenshot (5)](https://github.com/AjrudeenKhan/FlipKart_MERN/assets/129118661/0aa2aa15-26d1-4233-a2fd-035ec28eacf6)
+
+## Steps to Run Locally
+
+1. Clone this repository.
+2. Navigate to the `client` folder.
+3. Run `npm install` to install the required packages.
+4. Run `npm start` to start the client.
+5. Open a new console, navigate to the `server` folder.
+6. Run `npm install` to install the Node packages.
+7. Run `npm start` to start the server.
+8. Access the application at `http://localhost:3000/`.
+9. open new console in vscode and cd to server.
+10. Run command 'npm install'.
+11. Once the Node packages are installed.
+12. Once the Node packages are installed
+13. Run command 'npm start'
+14. At this point both client and servers are running.
+15. Now you will prompted to home route
+16. Go and register
+17. Once you are registered,you can login.
+18. The moment you are loggedin,you will be prompted to new routes that is products.
+19. From this routes,one can search products and create cart from the list of products.
+20. Created cart can be seen by the loggedin user.
+
 
 ## Feedback
 
