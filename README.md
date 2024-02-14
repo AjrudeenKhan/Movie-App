@@ -1,6 +1,6 @@
 # Trending Movie Web App
 
-Website Link- Click on image ![Screenshot (6)](https://github.com/AjrudeenKhan/FlipKart_MERN/assets/129118661/186ba571-8f0a-4ccd-abab-0e6b985252e0) (https://movie-app-phi-swart.vercel.app/)
+![Screenshot (6)](https://github.com/AjrudeenKhan/FlipKart_MERN/assets/129118661/186ba571-8f0a-4ccd-abab-0e6b985252e0) (https://movie-app-phi-swart.vercel.app/)
 
 ## About
 
